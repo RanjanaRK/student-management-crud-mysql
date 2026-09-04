@@ -7,7 +7,7 @@ const checkAuth = (req, res, next) => {
     const token = headers.split(" ")[1];
 
     if (!token) {
-      return res.status(403).json({ message: "No token provided" });
+      return res.status(401).json({ message: "No token provided" });
     } else {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -17,7 +17,7 @@ const checkAuth = (req, res, next) => {
       next();
     }
   } catch (error) {
-    res.status(500).json({ message: "Token is invalid" });
+    res.status(500).json({ message: "Token is invalid or expired" });
   }
 };
 
